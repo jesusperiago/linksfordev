@@ -13,6 +13,11 @@ new class extends Component
     public string $search = '';
     public string $tagFilter = '';
 
+    public function clearFilters(): void
+    {
+        $this->search = '';
+        $this->tagFilter = '';
+    }
 
     #[Computed]
     public function tagOptions(): Collection
@@ -112,6 +117,17 @@ new class extends Component
                         @endforeach
                     </select>
                 </div>
+
+                @if ($this->search !== '' || $this->tagFilter !== '')
+                <div class="mb-4 flex justify-end">
+                    <button
+                        type="button"
+                        wire:click="clearFilters"
+                        class="rounded-lg border border-[#ddd8cf] bg-white px-3 py-2 text-sm font-medium text-[#1a7a6d] transition hover:border-[#1a7a6d] dark:border-[#262830] dark:bg-[#181a24] dark:text-[#5eead4] dark:hover:border-[#5eead4]">
+                        Limpiar filtros
+                    </button>
+                </div>
+                @endif
             </div>
             <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 @forelse ($this->links as $link)
