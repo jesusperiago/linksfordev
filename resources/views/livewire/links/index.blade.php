@@ -117,9 +117,15 @@
                     </div>
                 </article>
                 @empty
+                @if ($this->search !== '' || $this->tagFilter !== '')
+                <p class="col-span-full rounded-xl border border-dashed border-[#ddd8cf] bg-white p-8 text-center text-sm text-[#52525b] dark:border-[#262830] dark:bg-[#181a24] dark:text-[#9ca3af]">
+                    No se encontraron enlaces que coincidan con los filtros aplicados.
+                </p>
+                @else
                 <p class="col-span-full rounded-xl border border-dashed border-[#ddd8cf] bg-white p-8 text-center text-sm text-[#52525b] dark:border-[#262830] dark:bg-[#181a24] dark:text-[#9ca3af]">
                     Todavía no hay enlaces. ¡Sé el primero en compartir uno!
                 </p>
+                @endif
                 @endforelse
             </div>
         </section>

@@ -105,9 +105,50 @@ class LinksIndexTest extends TestCase
             ->set('tagFilter', (string) $tag->id)
             ->assertSee('Limpiar filtros')
             ->assertDontSee($link->title)
+            ->assertSee('No se encontraron enlaces que coincidan con los filtros aplicados.')
             ->call('clearFilters')
             ->assertSet('search', '')
             ->assertSet('tagFilter', '')
             ->assertSee($link->title);
+    }
+
+    public function test_search_and_tag_filter_return_only_links_matching_both(): void
+    {
+        $tag = Tag::factory()->create([
+            'name' => 'laravel',
+        ]);
+
+        $matchingLink = Link::factory()->create([
+            'title' => 'Laravel testing resource',
+            'description' => 'A useful guide',
+            'author' => 'A developer',
+        ]);
+        $matchingLink->tags()->attach($tag);
+
+        $searchOnlyLink = Link::factory()->create([
+            'title' => 'Laravel resource without this tag',
+            'description' => 'Another guide',
+            'author' => 'Another developer',
+        ]);
+
+        $tagOnlyLink = Link::factory()->create([
+            'title' => 'Testing resource',
+            'description' => 'A useful article',
+            'author' => 'A writer',
+        ]);
+        $tagOnlyLink->tags()->attach($tag);
+
+        Livewire::test(Index::class)
+            ->set('search', 'Laravel')
+            ->set('tagFilter', (string) $tag->id)
+            ->assertSee($matchingLink->title)
+            ->assertDontSee($searchOnlyLink->title)
+            ->assertDontSee($tagOnlyLink->title);
+    }
+
+    public function test_index_shows_initial_empty_message_when_no_links_exist(): void
+    {
+        Livewire::test(Index::class)
+            ->assertSee('Todavía no hay enlaces. ¡Sé el primero en compartir uno!');
     }
 }
