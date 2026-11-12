@@ -159,6 +159,11 @@
                         @endif
                         @auth
                         @if (auth()->id() === $link->user_id)
+                        <a
+                            href="{{ route('links.edit', $link) }}"
+                            class="self-start text-xs font-semibold text-[#1a7a6d] hover:underline dark:text-[#5eead4]">
+                            Editar
+                        </a>
                         <button
                             type="button"
                             wire:click="deleteLink({{ $link->id }})"

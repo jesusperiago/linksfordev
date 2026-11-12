@@ -34,9 +34,9 @@ class LinkPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Link $link): bool
+    public function update(?User $user, Link $link): bool
     {
-        return false;
+        return $user?->id === $link->user_id;
     }
 
     /**
