@@ -157,6 +157,17 @@
                             Autor: {{ $link->author }}
                         </p>
                         @endif
+                        @auth
+                        @if (auth()->id() === $link->user_id)
+                        <button
+                            type="button"
+                            wire:click="deleteLink({{ $link->id }})"
+                            wire:confirm="¿Seguro que quieres eliminar este enlace? Esta acción no se puede deshacer."
+                            class="self-start text-xs font-semibold text-red-700 hover:underline dark:text-red-300">
+                            Eliminar
+                        </button>
+                        @endif
+                        @endauth
                     </div>
                 </article>
                 @empty

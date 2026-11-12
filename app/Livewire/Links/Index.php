@@ -22,6 +22,15 @@ class Index extends Component
         $this->tagFilter = '';
     }
 
+    public function deleteLink(int $linkId): void
+    {
+        $link = Link::query()->findOrFail($linkId);
+
+        $this->authorize('delete', $link);
+
+        $link->delete();
+    }
+
     #[Computed]
     public function tagOptions(): Collection
     {
