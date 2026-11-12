@@ -11,6 +11,43 @@
         <p class="mt-2 max-w-2xl text-sm leading-relaxed text-[#52525b] dark:text-[#9ca3af]">
             Artículos, herramientas, vídeos y otros recursos interesantes compartidos por developers.
         </p>
+        <div class="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-[#ddd8cf] pt-4 dark:border-[#262830]">
+            @guest
+            <span class="text-sm text-[#52525b] dark:text-[#9ca3af]">
+                Comparte enlaces con la comunidad
+            </span>
+
+            <nav class="flex items-center gap-3">
+                <a
+                    href="{{ route('login') }}"
+                    class="text-sm font-semibold text-[#1a7a6d] hover:underline dark:text-[#5eead4]">
+                    Iniciar sesión
+                </a>
+
+                <a
+                    href="{{ route('register') }}"
+                    class="rounded-lg bg-[#1a7a6d] px-3 py-2 text-sm font-semibold text-white hover:bg-[#146357] dark:bg-[#5eead4] dark:text-[#0c0e14]">
+                    Crear cuenta
+                </a>
+            </nav>
+            @endguest
+
+            @auth
+            <span class="text-sm text-[#52525b] dark:text-[#9ca3af]">
+                Hola, {{ auth()->user()->name }}
+            </span>
+
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+
+                <button
+                    type="submit"
+                    class="text-sm font-semibold text-[#1a7a6d] hover:underline dark:text-[#5eead4]">
+                    Cerrar sesión
+                </button>
+            </form>
+            @endauth
+        </div>
     </header>
 
     <main class="mx-auto max-w-[1800px] px-4 pb-12 sm:px-6 lg:px-8">

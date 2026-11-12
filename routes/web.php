@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LogoutController;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Links\Index;
@@ -18,3 +19,7 @@ Route::livewire('/register', Register::class)
 Route::livewire('/login', Login::class)
     ->middleware('guest')
     ->name('login');
+
+Route::post('/logout', LogoutController::class)
+    ->middleware('auth')
+    ->name('logout');
