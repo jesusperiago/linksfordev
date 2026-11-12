@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Livewire\Links\Index;
 use App\Models\Link;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -150,5 +151,25 @@ class LinksIndexTest extends TestCase
     {
         Livewire::test(Index::class)
             ->assertSee('Todavía no hay enlaces. ¡Sé el primero en compartir uno!');
+    }
+
+    public function test_links_show_username_without_exposing_name_or_email(): void
+    {
+        $user = User::factory()->create([
+            'name' => 'Private Full Name',
+            'email' => 'private@example.test',
+            'username' => 'public_handle',
+        ]);
+
+        Link::factory()
+            ->for($user, 'addedBy')
+            ->create([
+                'title' => 'Privacy test resource',
+            ]);
+
+        Livewire::test(Index::class)
+            ->assertSee('Añadido por @public_handle')
+            ->assertDontSee('Private Full Name')
+            ->assertDontSee('private@example.test');
     }
 }

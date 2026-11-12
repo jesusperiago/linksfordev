@@ -28,6 +28,7 @@ class UserRegistrationTest extends TestCase
             ->set('email', 'ada@example.test')
             ->set('password', 'a-secure-password')
             ->set('password_confirmation', 'a-secure-password')
+            ->set('username', 'ada_Lovelace')
             ->call('register')
             ->assertHasNoErrors()
             ->assertRedirect(route('index'));
@@ -39,6 +40,7 @@ class UserRegistrationTest extends TestCase
         $this->assertDatabaseHas('users', [
             'name' => 'Ada Lovelace',
             'email' => 'ada@example.test',
+            'username' => 'ada_lovelace',
         ]);
         $this->assertAuthenticatedAs($user);
         $this->assertTrue(Hash::check('a-secure-password', $user->password));
@@ -55,6 +57,7 @@ class UserRegistrationTest extends TestCase
             ->set('email', 'taken@example.test')
             ->set('password', 'a-secure-password')
             ->set('password_confirmation', 'a-secure-password')
+            ->set('username', 'Ada_Lovelace')
             ->call('register')
             ->assertHasErrors('email');
 
@@ -69,6 +72,7 @@ class UserRegistrationTest extends TestCase
             ->set('email', 'ada@example.test')
             ->set('password', 'a-secure-password')
             ->set('password_confirmation', 'a-different-password')
+            ->set('username', 'Ada_Lovelace')
             ->call('register')
             ->assertHasErrors('password');
 
@@ -83,6 +87,7 @@ class UserRegistrationTest extends TestCase
             ->set('email', 'ada@example.test')
             ->set('password', 'short')
             ->set('password_confirmation', 'short')
+            ->set('username', 'Ada_Lovelace')
             ->call('register')
             ->assertHasErrors('password');
 
@@ -97,6 +102,7 @@ class UserRegistrationTest extends TestCase
             ->set('email', '')
             ->set('password', 'a-secure-password')
             ->set('password_confirmation', 'a-secure-password')
+            ->set('username', 'Ada_Lovelace')
             ->call('register')
             ->assertHasErrors([
                 'name' => ['required'],
@@ -114,6 +120,7 @@ class UserRegistrationTest extends TestCase
             ->set('email', 'not-an-email')
             ->set('password', 'a-secure-password')
             ->set('password_confirmation', 'a-secure-password')
+            ->set('username', 'Ada_Lovelace')
             ->call('register')
             ->assertHasErrors([
                 'email' => ['email'],
@@ -130,5 +137,24 @@ class UserRegistrationTest extends TestCase
         $this->actingAs($user)
             ->get(route('register'))
             ->assertRedirect(route('index'));
+    }
+
+    public function test_registration_rejects_a_username_that_differs_only_by_case(): void
+    {
+        User::factory()->create([
+            'username' => 'ada_lovelace',
+        ]);
+
+        Livewire::test(Register::class)
+            ->set('name', 'Grace Hopper')
+            ->set('email', 'grace@example.test')
+            ->set('password', 'a-secure-password')
+            ->set('password_confirmation', 'a-secure-password')
+            ->set('username', 'ADA_LOVELACE')
+            ->call('register')
+            ->assertHasErrors('username');
+
+        $this->assertDatabaseCount('users', 1);
+        $this->assertGuest();
     }
 }

@@ -15,6 +15,28 @@
 
             <form wire:submit="register" class="mt-6 flex flex-col gap-4">
                 <div>
+                    <label for="username" class="mb-1 block text-sm font-medium">
+                        Username público
+                    </label>
+                    <input
+                        id="username"
+                        type="text"
+                        wire:model="username"
+                        autocomplete="username"
+                        minlength="3"
+                        maxlength="30"
+                        pattern="[A-Za-z0-9_-]{3,30}"
+                        placeholder="dev_user"
+                        required
+                        class="w-full rounded-lg border border-[#ddd8cf] bg-white px-3 py-2 text-sm outline-none focus:border-[#1a7a6d] focus:ring-2 focus:ring-[#1a7a6d]/20 dark:border-[#262830] dark:bg-[#0c0e14] dark:focus:border-[#5eead4]">
+                    <p class="mt-1 text-xs text-[#52525b] dark:text-[#9ca3af]">
+                        Este será el nombre visible junto a tus enlaces.
+                    </p>
+                    @error('username')
+                    <p class="mt-1 text-sm text-red-700 dark:text-red-300">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
                     <label for="name" class="mb-1 block text-sm font-medium">
                         Nombre
                     </label>
@@ -24,10 +46,9 @@
                         wire:model="name"
                         autocomplete="name"
                         required
-                        class="w-full rounded-lg border border-[#ddd8cf] bg-white px-3 py-2 text-sm outline-none focus:border-[#1a7a6d] focus:ring-2 focus:ring-[#1a7a6d]/20 dark:border-[#262830] dark:bg-[#0c0e14] dark:focus:border-[#5eead4]"
-                    >
+                        class="w-full rounded-lg border border-[#ddd8cf] bg-white px-3 py-2 text-sm outline-none focus:border-[#1a7a6d] focus:ring-2 focus:ring-[#1a7a6d]/20 dark:border-[#262830] dark:bg-[#0c0e14] dark:focus:border-[#5eead4]">
                     @error('name')
-                        <p class="mt-1 text-sm text-red-700 dark:text-red-300">{{ $message }}</p>
+                    <p class="mt-1 text-sm text-red-700 dark:text-red-300">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -41,10 +62,9 @@
                         wire:model="email"
                         autocomplete="email"
                         required
-                        class="w-full rounded-lg border border-[#ddd8cf] bg-white px-3 py-2 text-sm outline-none focus:border-[#1a7a6d] focus:ring-2 focus:ring-[#1a7a6d]/20 dark:border-[#262830] dark:bg-[#0c0e14] dark:focus:border-[#5eead4]"
-                    >
+                        class="w-full rounded-lg border border-[#ddd8cf] bg-white px-3 py-2 text-sm outline-none focus:border-[#1a7a6d] focus:ring-2 focus:ring-[#1a7a6d]/20 dark:border-[#262830] dark:bg-[#0c0e14] dark:focus:border-[#5eead4]">
                     @error('email')
-                        <p class="mt-1 text-sm text-red-700 dark:text-red-300">{{ $message }}</p>
+                    <p class="mt-1 text-sm text-red-700 dark:text-red-300">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -58,10 +78,9 @@
                         wire:model="password"
                         autocomplete="new-password"
                         required
-                        class="w-full rounded-lg border border-[#ddd8cf] bg-white px-3 py-2 text-sm outline-none focus:border-[#1a7a6d] focus:ring-2 focus:ring-[#1a7a6d]/20 dark:border-[#262830] dark:bg-[#0c0e14] dark:focus:border-[#5eead4]"
-                    >
+                        class="w-full rounded-lg border border-[#ddd8cf] bg-white px-3 py-2 text-sm outline-none focus:border-[#1a7a6d] focus:ring-2 focus:ring-[#1a7a6d]/20 dark:border-[#262830] dark:bg-[#0c0e14] dark:focus:border-[#5eead4]">
                     @error('password')
-                        <p class="mt-1 text-sm text-red-700 dark:text-red-300">{{ $message }}</p>
+                    <p class="mt-1 text-sm text-red-700 dark:text-red-300">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -75,25 +94,23 @@
                         wire:model="password_confirmation"
                         autocomplete="new-password"
                         required
-                        class="w-full rounded-lg border border-[#ddd8cf] bg-white px-3 py-2 text-sm outline-none focus:border-[#1a7a6d] focus:ring-2 focus:ring-[#1a7a6d]/20 dark:border-[#262830] dark:bg-[#0c0e14] dark:focus:border-[#5eead4]"
-                    >
+                        class="w-full rounded-lg border border-[#ddd8cf] bg-white px-3 py-2 text-sm outline-none focus:border-[#1a7a6d] focus:ring-2 focus:ring-[#1a7a6d]/20 dark:border-[#262830] dark:bg-[#0c0e14] dark:focus:border-[#5eead4]">
                 </div>
 
                 <button
                     type="submit"
                     wire:loading.attr="disabled"
-                    class="rounded-lg bg-[#1a7a6d] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#146357] disabled:cursor-wait disabled:opacity-70 dark:bg-[#5eead4] dark:text-[#0c0e14] dark:hover:bg-[#99f6e4]"
-                >
+                    class="rounded-lg bg-[#1a7a6d] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#146357] disabled:cursor-wait disabled:opacity-70 dark:bg-[#5eead4] dark:text-[#0c0e14] dark:hover:bg-[#99f6e4]">
                     Crear cuenta
                 </button>
-                            <p class="mt-5 text-sm text-[#52525b] dark:text-[#9ca3af]">
-                ¿Ya tienes cuenta?
-                <a
-                    href="{{ route('login') }}"
-                    class="font-semibold text-[#1a7a6d] hover:underline dark:text-[#5eead4]">
-                    Inicia sesión
-                </a>
-            </p>
+                <p class="mt-5 text-sm text-[#52525b] dark:text-[#9ca3af]">
+                    ¿Ya tienes cuenta?
+                    <a
+                        href="{{ route('login') }}"
+                        class="font-semibold text-[#1a7a6d] hover:underline dark:text-[#5eead4]">
+                        Inicia sesión
+                    </a>
+                </p>
             </form>
         </section>
     </main>

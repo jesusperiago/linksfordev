@@ -144,7 +144,7 @@
                     <div class="mt-auto flex flex-col gap-1.5 pt-3 text-xs text-[#52525b] dark:text-[#9ca3af]">
                         <div class="flex items-center justify-between gap-2">
                             <span class="min-w-0 truncate">
-                                Añadido por {{ $link->addedBy->name }}
+                                Añadido por {{ '@'.$link->addedBy->username }}
                             </span>
 
                             <time datetime="{{ $link->created_at->toDateString() }}" class="shrink-0 tabular-nums">
