@@ -86,6 +86,14 @@
                 >
                     Crear cuenta
                 </button>
+                            <p class="mt-5 text-sm text-[#52525b] dark:text-[#9ca3af]">
+                ¿Ya tienes cuenta?
+                <a
+                    href="{{ route('login') }}"
+                    class="font-semibold text-[#1a7a6d] hover:underline dark:text-[#5eead4]">
+                    Inicia sesión
+                </a>
+            </p>
             </form>
         </section>
     </main>
