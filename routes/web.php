@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LogoutController;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
+use App\Livewire\Links\Create;
 use App\Livewire\Links\Index;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,7 @@ Route::livewire('/login', Login::class)
 Route::post('/logout', LogoutController::class)
     ->middleware('auth')
     ->name('logout');
+
+Route::livewire('/links/create', Create::class)
+    ->middleware('auth')
+    ->name('links.create');

@@ -37,6 +37,12 @@
                 Hola, {{ auth()->user()->name }}
             </span>
 
+            <a
+                href="{{ route('links.create') }}"
+                class="rounded-lg bg-[#1a7a6d] px-3 py-2 text-sm font-semibold text-white hover:bg-[#146357] dark:bg-[#5eead4] dark:text-[#0c0e14]">
+                Añadir enlace
+            </a>
+
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
 
